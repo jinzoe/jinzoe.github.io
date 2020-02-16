@@ -330,6 +330,1644 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/16/于python实现济南市口罩自动预约/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/16/于python实现济南市口罩自动预约/" itemprop="url">基于python实现济南市口罩自动预约</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-16T16:52:10+08:00">
+                2020-02-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-16T17:27:55+08:00">
+                2020-02-16
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/16/于python实现济南市口罩自动预约/" class="leancloud_visitors" data-flag-title="基于python实现济南市口罩自动预约">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Readme"><a href="#Readme" class="headerlink" title="Readme"></a>Readme</h2><p>写的很糙，给会代码的小伙伴提供个思路<br>还是尽量少出门，希望疫情早点结束</p>
+<h2 id="预约口罩途径"><a href="#预约口罩途径" class="headerlink" title="预约口罩途径"></a>预约口罩途径</h2><ul>
+<li>漱玉平民防疫物品预约 【微信小程序】（每次3个，隔3天再约下一次） ​</li>
+<li>爱城市网【APP】（每次5个，隔3天再约下一次）</li>
+</ul>
+<h2 id="网络请求分析"><a href="#网络请求分析" class="headerlink" title="网络请求分析"></a>网络请求分析</h2><h3 id="漱玉"><a href="#漱玉" class="headerlink" title="漱玉"></a>漱玉</h3><p><img src="/img/kouzhao/shuyu.jpg" alt=""></p>
+<h4 id="请求信息"><a href="#请求信息" class="headerlink" title="请求信息"></a>请求信息</h4><p>需要 地区、街道、社区、身份证号、姓名、手机号、坐标、药店号、openid<br>openid是记录一个微信号在一个小程序的唯一标识</p>
+<h4 id="错误码"><a href="#错误码" class="headerlink" title="错误码"></a>错误码</h4><ul>
+<li>40001 今日预约量上限  </li>
+<li>40003 账号（openid）三日内有预约记录  </li>
+<li>40006 身份证号三日内有预约记录</li>
+</ul>
+<h3 id="爱城市网"><a href="#爱城市网" class="headerlink" title="爱城市网"></a>爱城市网</h3><p><img src="/img/kouzhao/icity.jpg" alt=""></p>
+<h4 id="请求信息-1"><a href="#请求信息-1" class="headerlink" title="请求信息"></a>请求信息</h4><p>需要 手机号、身份证号、姓名、药店信息、token<br>token是记录当前的登录信息</p>
+<h2 id="openid和token获取"><a href="#openid和token获取" class="headerlink" title="openid和token获取"></a>openid和token获取</h2><h3 id="安卓"><a href="#安卓" class="headerlink" title="安卓"></a>安卓</h3><p>安卓7.0以上因为系统的安全策略不能抓https的数据，解决方案比较麻烦安卓7.0以下可以用Packet Capture这个APP，或者用下面的Charles<br><img src="/img/kouzhao/s.png" alt=""><img src="/img/kouzhao/openid.png" alt=""><br><img src="/img/kouzhao/i.png" alt=""><img src="/img/kouzhao/token.png" alt=""></p>
+<h3 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h3><p>Charles软件需要在电脑上安装，代理网络请求教程 <a href="https://www.jianshu.com/p/5539599c7a25​" target="_blank" rel="noopener">https://www.jianshu.com/p/5539599c7a25​</a></p>
+<h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>漱玉的服务器是 shunneng.com<br>openid在请求的内容里<br>爱城市的服务器是icity24.cn<br>token（Access_token）在post请求的​header里​</p>
+<h2 id="伪造请求"><a href="#伪造请求" class="headerlink" title="伪造请求"></a>伪造请求</h2><p>将获取的信息写入配置文件<br>用python的request包伪造请求，代码和药店信息在这里</p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>两个软件都是早上7点预约，有远程服务器最好​​</p>
+<h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>crontab命令 <a href="http://c.biancheng.net/view/1092.html​" target="_blank" rel="noopener">http://c.biancheng.net/view/1092.html​</a></p>
+<h4 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h4><p><a href="https://blog.csdn.net/u012849872/article/details/82719372（没试过）​" target="_blank" rel="noopener">https://blog.csdn.net/u012849872/article/details/82719372（没试过）​</a></p>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>添加多个设备信息，或者增加循环次数（默认10），自行改代码<br>没有性能优化​</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/文】Knowledge-Query-Network-for-Knowledge-Tracing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/23/文】Knowledge-Query-Network-for-Knowledge-Tracing/" itemprop="url">【论文】知识查询网络KQN</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T09:05:00+08:00">
+                2019-07-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T12:32:46+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers-Reading/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers Reading</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/23/文】Knowledge-Query-Network-for-Knowledge-Tracing/" class="leancloud_visitors" data-flag-title="【论文】知识查询网络KQN">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>Knowledge Qery Network for Knowledge Tracing<br>– How Knowledge Interacts with Skills<br>Jinseok Lee &amp; Dit-Yan Yeung<br>Hong Kong University of Science and Technology</p>
+</blockquote>
+<p>KQN使用神经网络来编码学生的学习活动,分为<strong>知识状态和技能向量</strong>，并通过这两种向量之间的点积对交互进行建模。通过为此，我们引入了一个新的概念，称为<strong>概率技能相似性</strong>，它将技能向量之间的成对余弦和欧氏距离与相应技能的优势比联系起来，使KQN具有可解释性和直观性。</p>
+<p>在四个公共数据集上，</p>
+<ul>
+<li>基于预测精度，KQN优于现有的KT模型。</li>
+<li>知识之间的互动状态和技能可以可视化进行解释。</li>
+<li>基于概率技能相似性，一个技能域可以利用KQN的技能向量之间的距离聚类分析。</li>
+<li>对于不同的向量空间维数，KQN预测精度高，技能向量的距离矩阵之间具有较强的正相关关系。</li>
+</ul>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>智能辅导系统和大型开放式在线课程的优势之一是，它们可以在一个自适应的学习环境中监控和跟踪学生活动，从而发挥学习者建模的作用。<br><strong>学习者模型</strong>提供对学生状态的估计，包括两个相互关联的方面:领域建模和知识建模。<br><strong>领域模型</strong>研究问题域中的结构(它确定了问题与哪些技能相关)。领域模型的另一个任务是发现技能领域的结构，可以手动或自动执行。<br>另一方面，抽象意义上的<strong>知识模型</strong>,跟踪学生在解题过程中的知识。知识以知识状态的名义以各种形式被描述，而知识状态还没有普遍的定义。在本文中，知识状态这一术语被用来描述一个学生的技能获得的总体水平。<br>通常，领域建模和知识建模是分开的。然而，我们试图提供两种方法，学生的问题解决记录可以成为确定技能领域潜在结构的重要输入特征。</p>
+<p>KT是一个分析学生活动和学习知识获取的研究领域，其主要任务是描述学生的知识。要详细说明，请考虑一个解决了一系列问题的学生。然后，学生的数据由元组的时间序列给出，每个元组由与每个时间步的问题相关的技能和表示学生是否给出正确答案的二进制正确性组成。通过调用这样的元组学生响应，KT问题可以表述为:</p>
+<ul>
+<li>给定学生在时间步t之前的回答，描述学生在当前时间步t时的知识状态</li>
+<li>给定下一个时间步t + 1的技能，通过对学生在t时刻的知识状态与t + 1时刻的技能之间的交互进行建模，预测其正确性，我们称之为知识交互。  </li>
+</ul>
+<p>因此，KT模型的质量是通过描述学生知识状态的能力和预测正确性的准确性来衡量的。</p>
+<p>此外，由于知识交互建模是为了描述学生的知识状态对不同技能的反应，因此KT模型能够解释<strong>从知识交互中推断出来的技能之间的关系</strong>。例如，如果一个模型观察到学生在学习整数的时候没有学习整数的减法，那么我们可以说“整数的加法”独立于“整数的减法”。同样，如果学生对一项技能的知识状态的改变影响到另一项技能的知识状态，那么这两项技能也会相互依赖。我们认为，对这种技能关系进行建模可以进一步探索技能域的潜在结构，这也是领域建模的主题。</p>
+<p>然而，现有的KT模型提供了有限的知识状态或知识交互，或两者都有。例如，Bayesian Knowledge Tracing (BKT)对知识状态强加了一个二元假设，限制太多，难以直观，而Deep Knowledge Tracing (DKT)没有对知识交互做出解释。本文提出了一种新的神经网络KT模型，即知识查询网络(KQN)，该模型能较好地概括知识状态和解释知识交互。其<strong>核心思想是利用知识状态向量和技能向量之间的点积来定义知识交互，同时利用神经网络将学生的反应和技能编码为具有相同维数的向量</strong>。此外，我们引入了一个新的概念，称为概率技能相似性，它将技能向量之间的余弦和欧氏距离与相应技能的优势比联系起来。在此基础上，利用聚类分析方法，探讨了技能域的潜在结构。最后，通过比较不同向量空间维数下的预测精度和技能向量的距离矩阵，证明了KQN在预测正确性和学习技能向量方面是稳定的。</p>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><p>项目反应理论(IRT)是一个用来建模问题与正确性之间关系的框架。其最简单的形式是使用逻辑回归模型来估计学生的效率和技能差异。但是，它假设profciency是常量，并且没有解释任何问题的结构。为了克服这些限制，贝叶斯扩展的IRT提出了一个分层结构的项目(HIRT)和学生的知识状态(TIRT)的时间变化。尽管如此，HIRT假定学生的专业能力不变，而TIRT缺乏领域分析的能力。<br><img src="/img/KQN/t1.jpg" alt=""></p>
+<p>在BKT中，学生的知识状态被看作是一组二元潜在变量，每个技能一个，有两个可能的状态，已知的和未知的。然后，一组可观察变量，每一个对应于每项技能的正确性，都以这组二进制变量为条件。例如，假设我们有一个贯穿本文的学生Ben的运行示例，他的记录如表1所示。因此，技能1和技能2有两个知识状态和正确性变量，共四个变量，两个独立的BKT模型，输入数据如表1b所示。然后对BKT中的知识获取进行马尔可夫模型建模，其中知识交互由一组可解释方程控制。由于BKT缺乏遗忘和个性化的能力，已经提出了一些扩展。然而，最重要的是，BKT对不同技能的独立性假设被认为是高度受限和无效的，其中模型不能利用整个数据。例如，Ben对技能1的回答历史不能告诉他对技能2的回答，因为每个技能应该有两个单独的模型。</p>
+<p>学习因素分析(LFA)[2]将学生的知识状态建模为一组二元变量，每个二元变量对应一个技能。使用逻辑回归模型预测每个时间步骤的正确性，该模型具有与学生、技能相关的协变量，以及学生反应的汇总统计，即，每项技能过去的机会数量。</p>
+<p>性能因素分析(PFA)[16]扩展LFA通过将“每个技能的机会数”到“正确答案的数量/技能”和“不正确的答案的数量每技能”与其他相同的,例如,在本的情况下,输入数据预处理如表1所示表1c和d。</p>
+<p>由于在LFA和PFA中，对正确性的估计是用学生协变量来解释的，而在没有变量交互作用的情况下，使用技能-特殊fc协变量来解释，所以这两个模型并没有描述学生关于一项技能的知识状态如何受到另一项技能的知识状态的影响;相反，学生参数，也称为学生效率，是联系不同技能的知识状态的唯一因素。此外，技能是由技能-特殊变量的回归系数来解释的，我们不能直接从这些系数来判断技能域的结构。</p>
+<p>DKT作为第一个神经网络KT模型，以学生的反应作为输入，将学生的知识状态编码为一个由一个递归神经网络(RNN)计算得到的摘要向量，RNN是一种著名的时间数据建模神经网络技术。然而，DKT并不直接定义知识交互。详细地说，每个时间步的学生响应都形成一个元组(qt, at)，其中qt和at分别表示问题ID和正确性。例如，表1a中Ben的原始数据在t = 1时表示为(1,0)。然后将输入传递给RNN层，在原始论文中使用了长短时记忆，其输出隐藏状态经过afne变换后传递给logistic函数，即,=σ(W·ht + b),在ht是输出LSTM层和σ的隐藏状态以聪明元素物流功能。最后,欧美的k元素是用来预测正确性在下次一步考虑到下一题ID是k。尽管其优越的预测性能在现有的经典方法,DKT遭到了其他报纸的批评，在教育应用程序缺乏实用性。这是因为输出的隐藏状态ht在本质上很难被解释为知识状态，并且该模型并没有提供对知识交互的洞察。</p>
+<p>为了使神经网络KT模型更具解释性，通过扩展记忆增强神经网络(MANNs)引入动态键值记忆网络(DKVMN)。与DKT一样，DKVMN使用原始数据作为输入。DKVMN将学生反应的时间信息累积到一个动态矩阵中，即值记忆，同时将技能嵌入到一个静态矩阵中，即键记忆。DKVMN利用余弦相似度计算的注意权值来定义值向量与关键向量之间的交互关系，并通过将一个加权的值向量和一个嵌入的技能向量串联到一个多层感知器(MLP)来预测正确性。虽然DKVMN的预测精度已经被证明高于DKT，但是模型的输出使用MLP仍然很难解释知识交互。</p>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><h4 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h4><p>为了在直观描述知识交互的同时概括知识状态，我们提出了一个模型，该模型将学生的<strong>知识和技能投射到相同的嵌入维数d的向量空间中</strong>。它们有单位长度和正坐标。利用当前知识状态向量与下一题技能向量的点积，给出了答对的概率估计的logit。这需要知识状态和技能向量都位于同一个向量空间。</p>
+<p>现在，我们来说明为什么技能向量被设置为单位长度，并被约束为一个正值——前者使logit<strong>只依赖于相关技能向量的方向</strong>，而后者确保了对一项技能的学习不会减少对另一项技能的学习。</p>
+<p>例如,在一个二维向量空间,两次答题之后，t=2时，假设知识状态KS2 = (1, 1) T。三个技能向量,s1 = (1,0) T和s2 = (0,1) T 对应技能1和2,s3 = (−1,0) T对应第三个“xxx”技能,如图1所示。当t = 3时，他正确地回答了技能1，他的知识状态可能变为KS3 = (2,1) T。然后对s1的logit值从KS2·s1 = 1增加到KS3·s1 = 2，而对技能2的logit值与KS2·s2 = KS3·s2 = 1相同。但是，技能3的logit值会从KS2·s3 = - 1下降到KS3·s3 = - 2，从而降低了对技能3正确性的概率估计。这是违反直觉的，因为我们正在处理的数据集具有同一领域内的一组技能，例如数学。</p>
+<p><img src="/img/KQN/f1.jpg" alt=""></p>
+<h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>令问题的能和t时刻的正确性分别为et∈{1，……，N}和ct∈{0,1}。在t = 1、……、t - 1时刻，根据反应历史和t+1时刻的技能，将ct+1的正确性视为<strong>伯努利变量</strong>。KT模型的目标是求出各时刻步长伯努利分布的参数:<br><img src="/img/KQN/1.jpg" alt=""></p>
+<h4 id="架构总览"><a href="#架构总览" class="headerlink" title="架构总览"></a>架构总览</h4><p>KQN由三个部分组成：知识编码器、技能编码器，知识状态查询。</p>
+<ul>
+<li>知识编码器将学生响应的时间信息转换为知识状态向量</li>
+<li>技能编将技能嵌入到技能向量中。</li>
+<li>知识状态查询根据将这两个向量，进行下一题的预测<br><img src="/img/KQN/f2.jpg" alt=""></li>
+</ul>
+<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p>该模型接受两个输入:当前时间步的学生响应和下一个时间步的技能。每个学生的回答都是one-hot编码，并作为输入xt给RNN层，如下:<br><img src="/img/KQN/2.jpg" alt=""><br>其中N为技能数量，k为t时刻的技能。同理，t+1时刻的技能k ‘为1 -hot编码为et+1，其中k ‘ -th元素为1，其他元素为0。在Ben的例子中，他在t = 1时的响应和在t = 2时的问题技巧分别编码为x1 = (1,0,0,0)T和e2 = (0,1)T</p>
+<h4 id="知识状态查询"><a href="#知识状态查询" class="headerlink" title="知识状态查询"></a>知识状态查询</h4><p>设知识状态向量KSt和嵌入的技能向量st+1均为d维，分别为知识编码器和技能编码器编码的两个向量。然后利用这两个向量的内积来描述知识交互。logit yt+1和相应的预测概率pt+1计算如下（σ(u) 是一个回归函数，点表示内积）:<br><img src="/img/KQN/3.jpg" alt=""></p>
+<p>这样，知识交互就得到了很好的定义，原因如下:</p>
+<ul>
+<li>如果两个技能是独立的，那么它们对应的向量是正交的。因此，对数对一个向量的增减并不影响对数对另一个向量的增减。</li>
+<li>如果从概率的角度来看，两种技能是相似的，那么logit相对于一个向量的增加将导致logit相对于另一个向量的增加，反之亦然。</li>
+</ul>
+<p>注意，从以上知识交互的角度来看，这意味着最多可以有d个相互独立的技能。对于不同的d值，KQN是否学习了以成对距离表示的技能之间的成对关系在实验中进行了检验，并在后面的章节中进行了展示。因此，KQN对各时刻步长伯努利分布的参数近似为:</p>
+<p><img src="/img/KQN/4.jpg" alt=""></p>
+<h4 id="知识状态编码器"><a href="#知识状态编码器" class="headerlink" title="知识状态编码器"></a>知识状态编码器</h4><p>输入xt，输出KSt<br><img src="/img/KQN/5.jpg" alt=""><br>其中，RNN是RNN的层<br><img src="/img/KQN/6.jpg" alt=""><br>HRNN是RNN的状态大小。在KQN中，LSTM和门控循环单元(GRU)作为RNN变体进行了测试。此外，为了避免过拟合, RNN输出层使用了dropout正则化，就像之前的工作中使用DKT一样</p>
+<h4 id="技能编码器"><a href="#技能编码器" class="headerlink" title="技能编码器"></a>技能编码器</h4><p>输入et+1，输出st+1,with MLP 多层神经网络<br><img src="/img/KQN/7.jpg" alt=""></p>
+<p>s被限制为一个d维正值向量，后面用Ud表示</p>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>在每个时间步长，计算给定概率估计和目标正确性的交叉熵误差，并对t = 1、……、t - 1的误差项求和，得到总误差。<br><img src="/img/KQN/8.jpg" alt=""><br>模型参数θmodel总误差的梯度被  一种优化方法使用的反向传播 计算。</p>
+<h3 id="概率技能相似性"><a href="#概率技能相似性" class="headerlink" title="概率技能相似性"></a>概率技能相似性</h3><p>基于KQN的体系结构，提出了一种新的概率技能相似度概念，从概率的角度度量技能之间的距离。</p>
+<h4 id="技能向量之间的距离计算"><a href="#技能向量之间的距离计算" class="headerlink" title="技能向量之间的距离计算"></a>技能向量之间的距离计算</h4><p>对于从KQN中学习到的任意两个技能向量s1, s2，余弦距离与欧氏距离的平方仅相差2倍，因为它们受Ud约束如下:<br><img src="/img/KQN/9.jpg" alt=""></p>
+<h4 id="距离和优势比"><a href="#距离和优势比" class="headerlink" title="距离和优势比"></a>距离和优势比</h4><p>接下来，我们将展示两个技能向量之间的成对距离如何与它们的优势比的对数相关。给定一个知识状态向量KS∈Rd和一个技能向量s∈Ud，其正确性的概率估计p和相应的概率o计算如下:<br><img src="/img/KQN/10.jpg" alt=""></p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>接下来，我们将展示两个技能向量之间的成对距离如何与它们的优势比的对数相关。测试了KQN的四个任务:正确性预测、知识交互可视化、技能域分析和向量空间维数的敏感性分析。</p>
+<p>在正确性预测方面，将KQN模型与其他模型在四个公共数据集上的性能进行了比较:一个综合数据集和三个在线的真实数据集。然后，以一个学生为例，用热图来可视化知识交互，以演示关于不同技能的知识状态查询。然后，利用基于技能距离的聚类方法对技能域进行了研究。最后，将一个维度的技能向量与其他维度的技能向量进行两两距离的比较，对向量嵌入维度进行敏感性分析。</p>
+<h4 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h4><p>以下四个数据集用于评估模型:ASSISTments 2009-2010、ASSISTments 2015、OLI Engineering Statics 2011和Synthetic-5。为了公平地比较正确性预测任务，我们使用了DKVMN源代码提供的在线数据集的统计数据如表2所示。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>实现的KQN和DKT的所有程序代码都是用TensorFlow 1.56编写的。对于每个数据集的数据分割，我们使用了与DKVMN相同的来比较预测精度。</p>
+<h5 id="正确预测"><a href="#正确预测" class="headerlink" title="正确预测"></a>正确预测</h5><p>所有学生的回答序列都保持在原来的长度，没有截断。除了Synthetic-5之外，每个数据集都被分成训练集、验证集和测试集，训练与验证的比例分别为8:2和7:3，(训练+验证)与测试的比例为测试比。对于synthe5，分别设置了8:2和5:5的比例，并通过提前停止的holdout验证对超参数进行了网格搜索。注意，在测试阶段没有使用早期停止。在验证和测试阶段，epochs的数量分别设置为50和200。在测试阶段，KQN运行了5次，并报告了性能指标结果的均值和标准差。KQN的超参数及其候选值设置如下</p>
+<h5 id="知识交互可视化"><a href="#知识交互可视化" class="headerlink" title="知识交互可视化"></a>知识交互可视化</h5><p>在学生的整个回答过程中，使用知识状态查询和逻辑函数计算学生所解决技能的正确性预测估计数。该任务使用了2009-2010年assist测试集中的一个示例。然后用热图将这些估计可视化，以评估学生在解决问题时的变化。<br><img src="/img/KQN/f3.jpg" alt=""></p>
+<h5 id="技能域分析"><a href="#技能域分析" class="headerlink" title="技能域分析"></a>技能域分析</h5><p>技能距离用于在四个数据集中进行聚类。为了确定连接方式和使用的距离度量类型，我们首先对synthe5进行平面聚类，将聚类数设置为5，即聚类的实际值。然后，使用调整后的Rand Index (ARI)对原始集群标签的聚类或分区质量进行测量。当形成与原始分区完全匹配的集群时，最大值为1;当随机分区时，最小值为0。由于Synthetic-5有20个子数据集，所以平均有20个ARI得分。将聚类与距离度量类型之间的关联设置为超参数</p>
+<h5 id="向量空间维数的灵敏度分析"><a href="#向量空间维数的灵敏度分析" class="headerlink" title="向量空间维数的灵敏度分析"></a>向量空间维数的灵敏度分析</h5><p>设d为KQN中向量空间的维数，dopt为之前正确性预测任务中得到的d的最优值。KQN在四个数据集上通过改变d到0.5d opt和2dopt进行训练，数据分割保持不变，其他超参数设置为最优值。为了分析d对预测任务正确性和技能向量学习的影响，报告了预测精度，并比较了d = dopt、0.5dopt、2dopt三个技能向量的距离矩阵。</p>
+<h3 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h3><h3 id="结论和未来工作"><a href="#结论和未来工作" class="headerlink" title="结论和未来工作"></a>结论和未来工作</h3><p>本文的贡献如下</p>
+<ul>
+<li>KQN在正确率预测的准确度方面比其他模型优秀</li>
+<li>KQN能够根据不同的技能对学生的知识状态进行查询，有助于通过可视化的方式解释知识交互。</li>
+<li>KQN的结构引入了概率技能相似性的概念，将两个技能向量之间的余弦和欧氏距离与本文前面介绍的相应技能的优势比联系起来。这使得技能向量及其两两距离对于领域建模(例如，使用聚类分析)非常有用。</li>
+<li>KQN强劲到向量空间的维数变化的知识状态和技能向量,其预测精度不退化,而且学习强烈正相关集技能之间的两两距离向量维数的值是不同的,或者说,KQN学习技能稳定之间的潜在关系。</li>
+</ul>
+<p>与其他神经网络模型相比，KQN有更多的参数需要学习。例如，由于在技能编码器中包含一个MLP，而在知识状态编码器中包含一个RNN，因此KQN在计算上比DKT更复杂，而DKT只有一个RNN用于编码学生的响应。启发式地，与DKT+KQN相比，训练KQN需要更多的GPU内存。尽管如此，我们认为上述KQN的优点足以弥补空间复杂度的增加。</p>
+<p>KQN提出了一种解决KT问题的新方法，即在同一向量空间中对知识状态和技能向量进行重构。它将知识状态和技能作为向量的一般形式，同时将知识交互清晰地刻画为两类向量之间的点积。从两两之间的距离的技能向量是解释为相应的优势比的对数从概率的角度来看,这些距离可以成为有用的特性域建模探索技能领域的潜在结构,可作为KT的未来研究的方向。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/文阅读——SAKT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/18/文阅读——SAKT/" itemprop="url">【论文】自注意力知识追踪SAKT</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T09:20:00+08:00">
+                2019-07-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T12:35:51+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers-Reading/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers Reading</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/18/文阅读——SAKT/" class="leancloud_visitors" data-flag-title="【论文】自注意力知识追踪SAKT">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>A Self-Attentive model for Knowledge Tracing<br>AIED 2019</p>
+</blockquote>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>近年来，基于递归神经网络（RNN）的深度知识追踪（Deep Knowledge Tracing，DKT）和动态键值记忆网络（Dynamic Key-Value Memory Network，DKVMN）由于能够捕捉复杂的人类学习表征，其性能优于传统方法。然而，这些方法在处理稀疏数据时面临着<strong>不能很好地进行泛化</strong>的问题，而真实世界的数据就是这样，因为学生与很少的KCs交互。</p>
+<p>为了解决这个问题，我们开发了一种方法，从学生过去的活动中识别出与给定的KC相关的KCs，并基于所选择的相对较少的KCs预测他/她的掌握程度。由于预测是基于相对较少的过去的活动，它处理<strong>数据稀疏问题</strong>比基于RNN的方法更好。为了确定KCs之间的相关性，我们提出了一种基于自注意力机制的方法——自注意力知识追踪（SAKT）。在各种真实数据集上的大量实验表明，我们的模型在知识跟踪方面的性能优于最先进的模型，平均提高了4.43%的AUC。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>在本文中，我们提出了一种基于纯注意机制的方法——transformer。在KT任务中，学生在进行一系列学习活动时所建立的<strong>技能是相互关联的</strong>，而他在某一特定练习中的表现取决于他在过去与该练习相关的练习中的表现。例如，在图1中，一个学生来解决一个题目对“二次方程”（题5）属于知识概念“方程”，他需要知道如何找到“开根方”（题3）和“线性方程”（题4）。<br><img src="/img/SAKT/1.jpg" alt=""></p>
+<p>SAKT，本文首次提出根据过去的交互识别相关的KC，然后预测学生的表现。我们使用练习题作为KCs。正如我们稍后所展示的，SAKT在预测学生在特定练习中的表现时，为之前回答的练习分配权重。所提出的SAKT方法显著优于最先进的KT方法，在AUC上的性能平均提高了4.43%。此外，SAKT的主成分（自我注意）适合并行性；因此，使我们的模型数量级比基于RNN的模型更快。</p>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>我们的模型根据学生之前的交互序列X=x1，x2，.…来预测他是否能够回答下一个练习et+1。如图2所示，我们可以将问题转换为顺序建模问题<br><img src="/img/SAKT/2.jpg" alt=""><br><img src="/img/SAKT/3.jpg" alt=""></p>
+<p>考虑输入x1、x2、…，xt-1和前面一个位置的练习序列e2，e3，…，其输出为练习回答的正确性r2，r3。将交互元组xt=（et，rt）表示为一个数yt = et + rt * E，其中E为练习总数。因此，交互序列中的一个元素可以取的值为2E，而练习序列中的元素可以取E个可能的值。</p>
+<p>我们现在描述架构的不同层。</p>
+<h4 id="嵌入层"><a href="#嵌入层" class="headerlink" title="嵌入层"></a>嵌入层</h4><p>对得到的输入序列y=（y1，y2，…，yt）转换为s=（s1，s2，.…，sn)。其中n为模型能够处理的最大长度。由于该模型可以处理固定长度序列的输入，如果序列长度t<n，则在序列的左侧重复添加一个填充的问答对。然而，如果t>n，我们将序列划分为长度为n的子序列。所有这些子序列都作为模型的输入。</n，则在序列的左侧重复添加一个填充的问答对。然而，如果t></p>
+<p>我们训练一个交互嵌入矩阵<img src="/img/SAKT/M.jpg" alt="">，其中d为潜在维数。该矩阵用于获取序列中每个元素的嵌入量（Msi）。同样，我们训练练习嵌入矩阵<img src="/img/SAKT/E.jpg" alt="">使得集合ei中的每个练习都嵌入到eith中行。</p>
+<p><strong>位置编码：</strong>位置编码是在自注意神经网络中对位置进行编码的一层，与卷积网络和递归神经网络一样，我们可以对序列的顺序进行编码。这一层在知识追踪问题中尤为重要，因为学生的知识状态是随着时间的推移而逐步稳定发展的。特定时间的知识状态不应该显示波形转换。为了将其结合起来，我们使用了一个参数，位置嵌入，<img src="/img/SAKT/P.jpg" alt="">这是在训练中学习的。将位置嵌入矩阵的第i行Pi加入到交互序列的第i个元素的交互嵌入向量中。</p>
+<p>嵌入层的输出是 嵌入交互输入矩阵 和嵌入练习矩阵：<br><img src="/img/SAKT/f1.jpg" alt=""></p>
+<h4 id="自注意力层"><a href="#自注意力层" class="headerlink" title="自注意力层"></a>自注意力层</h4><p>在我们的模型中，我们使用了缩放的点积注意力机制。这一层找到对应于先前解决的每个练习的相对权重，用于预测当前练习的正确性。我们使用以下公式得到查询和键值对：<br><img src="/img/SAKT/f2.jpg" alt=""><br>其中WQ、WK、WV=Rdxd分别为查询、键和值投影矩阵，它们将各自的向量线性投影到不同的空间。之前的每一次交互与当前练习的相关性是由注意力权重决定的。为了找到注意力的权重，我们使用缩放后的点积为：<br><img src="/img/SAKT/f3.jpg" alt=""><br><strong>多重头：</strong>为了共同关注来自不同代表子空间的信息，我们使用不同的投影矩阵对查询、键和值h进行线性投影。<br><img src="/img/SAKT/f4.jpg" alt=""></p>
+<p><strong>因果关系：</strong><br>在我们的模型中，当预测t+1时刻练习的结果时，我们应该只考虑前t个交互。因此，对于查询Qi，不应该考虑键Kj这样的j&gt;i。我们使用因果层来掩盖从未来交互键中获得的权重。</p>
+<h4 id="前馈层"><a href="#前馈层" class="headerlink" title="前馈层"></a>前馈层</h4><p>上面描述的自我注意层会产生加权的值和，即之前交互作用的Vi。然而矩阵的行从多线程层，获得<img src="/img/SAKT/S.jpg" alt="">仍然是一个值的线性组合。为了在模型中考虑非线性和不同潜在维数之间的相互作用，我们使用了一个前馈网络。<br><img src="/img/SAKT/f5.jpg" alt=""></p>
+<h4 id="残差连接"><a href="#残差连接" class="headerlink" title="残差连接"></a>残差连接</h4><p>使用剩余连接将低层特征传播到高层。因此，如果低层特征对于预测很重要，那么剩余连接将有助于将它们传播到执行预测的最终层。在KT的背景下，学生尝试属于的练习加强这一概念的具体概念。因此，剩余连接可以帮助将最近解决的练习的嵌入传播到最后一层，使模型更容易利用低层信息。在自注意和前馈层之后应用剩余连接。</p>
+<h4 id="层归一化"><a href="#层归一化" class="headerlink" title="层归一化"></a>层归一化</h4><p>跨特征的归一化输入有助于神经网络的稳定和加速。出于同样的目的，我们在体系结构中使用了层规范化。层归一化同时应用于自注意层和前馈层。</p>
+<h4 id="预测层"><a href="#预测层" class="headerlink" title="预测层"></a>预测层</h4><p>最后，将上述得到的矩阵Fi的每一行通过激活Sigmoid的全连通网络来预测学生的学习成绩。<br><img src="/img/SAKT/f6.jpg" alt=""></p>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p>训练的目的是使模型下观察到的学生反应序列的负对数似然最小化。这些参数是通过最小化p和rt之间的交叉嫡损失来获得的。<br><img src="/img/SAKT/f7.jpg" alt=""></p>
+<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><h4 id="学生成绩预测"><a href="#学生成绩预测" class="headerlink" title="学生成绩预测"></a>学生成绩预测</h4><p>表3为SAKT与当前最先进方法的成绩对比。在综合数据集上，SAKT的性能优于其他竞争方法，AUC为0.832，而DKT+为0.824。尽管Synthetic是最密集的数据集，但由于生成Synthetic的方法，SAKT的性能优于基于RNN的方法。对于这个数据集，每个单独的练习只派生自一个概念。学生回答一个练习的概率从这个数据集确定正确使用项目反应理论<br><img src="/img/SAKT/irt.jpg" alt=""><br>c表示猜测正确的概率，a和β是随机选择的数字来表示概念的能力和运动困难，分别。因此，在这个数据集中，属于同一概念的练习具有很强的相关性。</p>
+<p>与其他基准测试不同，SAKT直接尝试识别属于相同概念的练习，因此性能优于其他方法。在ASSIST2009上，SAKT的性能优于其他方法，比性能第二好的方法提高了3.16%。对于ASSIST2015数据集，SAKT显示了令人印象深刻的15.87%的改进。我们将这一优势归因于SAKT利用的注意力机制，即使数据集是稀疏的，也可以很好地学习和推广，而在ASSIST2015中，它的密度是其他数据集中最小的。对于STATICS2011，我们的方法与DKT+相比，性能提高了2.16%。对于ASSISTChall，我们的方法的性能与DKT相当。这可以归因于ASSISTChall是所有真实数据集中最密集的数据集。</p>
+<h4 id="注意力权重可视化"><a href="#注意力权重可视化" class="headerlink" title="注意力权重可视化"></a>注意力权重可视化</h4><p>将过去交互的元素（充当键）和学生接下来要解决的练习（充当查询）之间的注意力权重可视化，有助于理解过去交互中的哪些练习与查询练习相关。有了这个动机，我们计算了所有序列中每个练习对（e1，e2）的注意权重之和，其中e1用作查询，而与练习e2的交互用作键。然后，我们将注意力权重标准化，使每个查询的权重之和为1。这就产生了一个关联矩阵，其中每个元素（e1，e2）表示e2对e1的影响。我们对合成数据进行分析，这个数据集是用已知的隐藏概念生成的。图3a为与合成题相关矩阵对应的热图。对于合成，所有序列都由相同序列中的所有练习标记组成，从1到50。</p>
+<p>为了构建练习标签之间的影响图，如图3b所示，我们使用了关联矩阵。首先，我们画出了第一序列中的运动属于每一个隐藏的概念，并访问关联矩阵的每一行，并连接相对应的运动这一行第一个两个练习排名基于边缘的体重，这之间注意重量成正比的练习。我们可以看到，基于注意力权重，我们能够实现完美的聚类运动标签的基础上，隐藏的概念，他们的来源。一个有趣的观察是，两个练习在序列上相隔很远，但属于同一个概念，可以被SAKT识别。例如，如图3b所示，一个关于练习22的查询将大部分权重分配给了练习5中的键，即使它们在序列中相隔很远。</p>
+<p>两种相互关联的练习往往具有较高的注意力权重，因为其中一种练习的表现会影响另一种练习的表现。此外，在实际场景中，顺序相近的练习往往属于同一个概念。因此，我们期望注意力的权重偏向于最近在交互序列中发生的练习。为了说明这一点，我们手动分析了ASSIST2009数据集，以可视化所选样本的注意权重。表4显示了一些练习，以及过去的交互和分配给每个交互的注意力权重。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/论文阅读（6）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/31/论文阅读（6）/" itemprop="url">【论文】KPD模型：结合学习曲线遗忘曲线的知识追踪方法</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T10:19:00+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T12:36:52+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers-Reading/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers Reading</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/31/论文阅读（6）/" class="leancloud_visitors" data-flag-title="【论文】KPD模型：结合学习曲线遗忘曲线的知识追踪方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>Tracking Knowledge Profciency of Students with Educational Priors<br>陈玉莹 刘淇 中国科技大学 CIKM 2017</p>
+</blockquote>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>本文设计了一种解释性的概率方法，利用教育先验来跟踪学生的知识掌握度随时间的变化。具体来说，我们首先将每个练习与一个知识向量相关联(Q-matrix)，每个学生在同一知识空间中，每一次都被表示为一个知识向量。其次，给定学生知识向量随时间的变化，我们借用了两个经典的教育理论——学习曲线和遗忘曲线作为先验，以捕捉每个学生的效率随时间的变化。在此基础上，我们设计了一个<strong>结合学生和作业先验的概率矩阵因子分解框架</strong>来跟踪学生的知识生产率。</p>
+<h3 id="Introduces"><a href="#Introduces" class="headerlink" title="Introduces"></a>Introduces</h3><p>现实世界的教育服务系统，如智能辅导系统，允许学生独立学习和做练习。它们的便利和快速发展引起了教育者和公众越来越多的关注[1,5]。在这类系统中，一个关键的问题是学生的知识丰富度诊断(KPD)，即发现学生对每个知识点[32]的潜在掌握程度。图1显示了这个KPD任务的一个简单示例。图1中有两个学生从2016年3月到5月做不同的数学练习。每个练习包含不同的知识点，可以用教育专家[8]提供的q矩阵表示。<br><img src="/img/Tracking KP/2.png" alt=""></p>
+<p>教育领域的KPD任务要求:给定学生的历史锻炼记录和提供的q矩阵，如何诊断学生对知识点的掌握程度？事实上，由于这些诊断结果有利于许多应用，如有针对性的知识培训[12]和个性化的运动推荐[26]，许多人致力于这一KPD任务。一方面，教育心理学领域的<strong>认知诊断模型通常以潜在特质值[11]或二元技能掌握向量</strong>[8]来表征学生的知识丰富程度。另一方面，将KPD任务视为<strong>数据挖掘问题</strong>(即矩阵分解技术将每个学生投射到一个潜在的空间中，该空间描述了学生的隐性知识状态[16]。综上所述，这两个研究方向通常对用户的历史记录进行建模，没有任何时间信息，因此，他们善于从<strong>静态</strong>的角度预测学生的盈利情况。然而，教育心理学家长期以来一致认为，学生的学习过程不是静态的，而是随着时间的推移而演变的。   </p>
+<p>两种经典的教育理论可以很好地解释这种动态变化:<strong>学习曲线理论</strong>认为，学生可以通过不断地练习[2]来提高他们的知识丰富性;<strong>艾宾浩斯遗忘曲线</strong>理论指出，学生的知识丰富性可能会因为遗忘因素[10]而下降。让我们以图1中的两个学生为例。随着时间的推移，学生2通过一些练习提高了她在两个知识点上的效率。因此，她应该专注于一些关于新知识点的练习。而学生1的知识效率则随着遗忘因素的存在而降低。因此，一个及时的复习是必要的，以加强这两个知识点1。因此，有必要利用这两种教育理论来跟踪学生的知识丰度随时间的变化。  </p>
+<p>事实上，认知诊断领域[6,7,20,21,34]和数据挖掘社区[27,33,35]的一些研究工作已经尝试从<strong>动态角度</strong>解决KPD任务。实验结果验证了添加时间信息的优越性。然而，仍然有一些问题需要回答。具体来说，基于数据挖掘的方法，如TF模型[33]，只捕捉学生随时间变化的潜在因素，在实践中难以解释。我们认为<strong>显式知识点解释在KPD任务中尤为重要</strong>。具有明确的知识点意义，学生可以定量地衡量自身的优缺点，以达到自我完善的目的(如针对性的运动训练[12])。此外，在认知模型中，如基于Baysian knowledge tracking based models[7,20,34]，学习和遗忘因素被视为附加参数，忽略了这两个因素与教育专家建议的每次练习密切相关。因此，这些认知模型并不能回答这些教育理论如何能够帮助解释学生知识丰度随时间的演变。  </p>
+<p>因此，现有的方法很少能够解决以下挑战:如何将教育先验嵌入到KPD建模任务中，更好地解释和预测学生的KPD任务到知识点?为了解决上述问题，本文提出了一种解释性的概率知识生产率跟踪模型(KPT)，利用教育先验知识跟踪学生的KPD任务随时间的变化。</p>
+<h3 id="Realte-Works"><a href="#Realte-Works" class="headerlink" title="Realte Works"></a>Realte Works</h3><p>总的来说，我们将研究的相关工作归纳为以下三类。</p>
+<p>第一类是<strong>数据挖掘领域的学生建模</strong>[31,35]，目的是通过学生的练习了解学生的潜在表征。这些学习表示可以应用于应用程序，如分数预测[30]。通常，我们也把学生获得的表征作为他们的内隐知识丰度。有两种代表性的技术:因子分解模型[16]和神经网络[22]。例如，Thai-Nghe等人利用矩阵因子分解模型将每个学生映射到一个潜在的向量，该向量描述了学生的隐性知识状态。为了跟踪学生学习过程的变化，Thai-Nghe et al.[27]和Xiong et al.[33]提出了一种张量因子分解方法，通过对KPD随时间的增加加入额外的时间维度。最近，Piech等人[22]通过建立知识点与神经元之间的桥梁，提出了一种基于递归神经网络的学生学习过程建模方法，提高了成绩预测任务的性能。然而，这些作品的一个<strong>共同局限</strong>是，这些模型就像一个黑盒子一样运作，因此学生表示的<strong>输出很难解释</strong>。也就是说，无论是因子分解模型中的潜在向量，还是神经网络中的隐含层，都不能对应于任何显式知识点。相比之下，我们的模型通过<strong>利用教育先验(即， q矩阵，学习曲线和遗忘曲线)，保证了解释能力</strong>。</p>
+<p>第二个方向是<strong>教育认知领域的KPD研究</strong>，旨在发现学生对已掌握知识点的丰富程度[9,14]。广泛使用的方法可以分为两个方面:一维模型和多维模型。其中，项目反应理论(IRT)作为一个典型的一维模型，将每个学生作为一个单一的效率变量(即，潜在特质)[11]。相对而言，确定性输入、噪声和门模型等多维模型以二进制潜在向量为特征，用给定的q矩阵先验[8]描述学生是否掌握了知识点。此外，Wu等人提出了FuzzyCDM来定量诊断学生的知识丰富度。然而，据我们所知，所有这些方法都<strong>依赖于静态假设</strong>，忽略了KPD任务的时间因素。</p>
+<p>在这项工作中，我们关注学生的动态学习过程，捕捉每个学生的知识丰度随时间的变化。的动态变化来解释学生知识profciency在他们的学习过程中,教育心理学家聚合两种经典理论:<strong>学习曲线理论</strong>认为,学生可以提高他们的知识profciency常数审判或练习[2]和艾宾浩斯<strong>遗忘曲线理论</strong>表明,学生的知识profciency可能随着时间的推移下降[10]。基于这两种理论，研究者试图从进化的角度建立一系列的KPD任务求解模型。例如一些基于IRT的模型，如LFA[6]和PFA[21]，来改进传统的IRT，这些模型假设学生具有相同的学习率。此外，Wang等人提出了一个时间序列IRT模型来估计每个学生的动态潜在特征。此外，研究人员还提出了基于贝叶斯知识追踪(BKT)模型的变化[7,15,20,34]，以捕捉学生知识丰度随时间的变化。</p>
+<p>尽管这些努力很重要，但在实践中仍然存在一些局限性:首先，基于IRT的模型只估计每个学生的一个变量(如潜在特征)，因此他们不能同时发现学生在<strong>多个知识点上</strong>的丰富度(即其次，基于BKT的模型侧重于简化的学习场景，其中允许学生继续做相同的练习，而忽略了图1中更实际的场景，即学生只做每个练习一次。在大多数情况下，学生很少重复做同样的练习，而是寻求更多不同的练习来学习。最后但并非最不重要的是，基于IRT和基于BKT的模型都忽略了练习对学习和遗忘因素的直接影响，难以解释学生知识随时间的演化。</p>
+<h3 id="KPD-Model"><a href="#KPD-Model" class="headerlink" title="KPD Model"></a>KPD Model</h3><p><img src="/img/Tracking KP/3.png" alt=""><br><img src="/img/Tracking KP/4.png" alt=""></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="/img/Tracking KP/6.png" alt=""><br><img src="/img/Tracking KP/7.png" alt=""><br><img src="/img/Tracking KP/5.png" alt=""></p>
+<h3 id="Future-Works"><a href="#Future-Works" class="headerlink" title="Future Works"></a>Future Works</h3><p>结合学生行为进行分析<br>由浅入深的学习资源推荐</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/论文阅读记录（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/28/论文阅读记录（3）/" itemprop="url">【论文】基于概念图的LPAG算法for ALS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-28T18:22:29+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T12:49:25+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/28/论文阅读记录（3）/" class="leancloud_visitors" data-flag-title="【论文】基于概念图的LPAG算法for ALS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>A Concept Map-Based Learning Paths Automatic Generation Algorithm for Adaptive Learning Systems<br>山东师范大学 山东女子学院  IEEE Access 李言从 王晓 邵增珍 2018.12</p>
+</blockquote>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>概念图是自适应学习系统中重要的知识可视化工具。通过对概念图的分析，找出学生的薄弱概念，为学生和教师提供学习指导和教学建议。然而，在目前的研究中，当概念数量较大且概念之间的关联复杂时，很难从概念图中分析出有效的信息。它很少能反映不同学生群体的学习成绩，不能反映自适应学习系统的特点。针对自适应学习系统，提出了一种学习路径自动生成算法——学习路径生成(LPG)算法。LPG算法充分考虑了不同学生群体的学习性能。通过聚类算法和关联规则挖掘，生成具有不同学习特征的概念图，利用拓扑排序算法生成多个简化的学习路径。实验表明，LPG算法对学生群体有较好的识别能力，可以根据学生的学习成绩<strong>生成不同的学习路径</strong>。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>自适应学习系统在电子学习和智能教育领域得到了广泛的研究。它是一个可以根据学生对建模的结果进行自适应调整的学习系统。概念图作为自适应学习系统中有效的知识可视化工具，已成为当前研究的热点。概念图能够以结构化的形式表达概念，既能促进学生的有意义学习，又能根据学生的学习表现对概念结构进行自适应调整。</p>
+<p>研究人员对概念图进行了大量的研究，并提出了许多由概念图<strong>派生的方法</strong>。</p>
+<ol>
+<li>Lee等人使用关联规则挖掘算法分析<strong>概念之间的关联规则</strong>，并自动生成概念图。基于这些自动生成的概念图，为学生建立了一个补救教学路径(RIP)。然而，他们所建立的教学路径是针对所有被他们分析过的学生。</li>
+<li>Atapattu等人[7]提出了一种利用<strong>自然语言处理技术从幻灯片中生成概念图</strong>的自然语言处理(NLP)算法，作为专家手工生成概念图的主动替代方法。然而，生成的概念图是静态的，不能反映学生的学习成绩。</li>
+<li>Huang等人使用分类方法<strong>对学生进行分组</strong>，并基于关联规则法生成概念图。生成的概念图反映了学生的整体表现，不具备区分学生的能力。</li>
+<li>Acharya等人提出了一种基于概念图的诊断学习方法，利用<strong>直接哈希和剪枝算法构造概念图</strong>。删除概念图中的冗余，生成一个学习序列。基于这个学习序列利用Android模拟器开发了一个原型学习系统。这种学习顺序并不能反映不同学生群体对不同概念的掌握情况。</li>
+</ol>
+<p>总的来说，研究者们基于概念图进行了大量的研究，并取得了许多成果。然而，这些研究也有一些局限性。这些研究没有根据学生的学习行为数据来区分和分析学生。所有学生都在统一分析的指导下学习，不能反映适应性学习系统的特点。进一步分析概念图主要依靠劳动力。当概念之间关联规则的数量增加时，很难从概念图中提取有效的信息。针对自适应学习系统，提出了一种基于概念图的学习路径自动生成算法LPG(学习路径生成)。</p>
+<p>LPG算法针对的就是上述局限性。它是基于学生的掌握水平的计算机科学的概念,利用<strong>聚类和关联规则挖掘算法来生成概念图</strong>与不同的学生的学习特点,并利用拓扑排序算法自动生成学习路径,这是根据自适应学习系统的特点。</p>
+<p>本研究的主要贡献如下:</p>
+<ul>
+<li>(一)根据学生的学习成绩数据生成若干概念图。本研究可以克服现有研究对学生学习行为不区分的局限性。</li>
+<li>(二)将学生按不同的学习特点分组，每组学生分别进行分析。分组后的学生可以通过不同的方式进行指导。学生分组后学习概念的时间长短不同，反映了LPG算法的适应性。</li>
+<li>(三)将拓扑排序算法应用于概念图分析，自动生成多个不同的学习路径。学习路径的生成不需要劳动力，节省了劳动力成本。教师可以根据学习路径安排教学顺序和教学时长，每组学生都有不同的教学方法指导。</li>
+</ul>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><p>康奈尔大学的Novak和Gowin[10]首次提出了概念图，用节点表示概念，用有向边表示概念之间的关联规则。概念图在自适应学习系统[11]中得到了广泛的应用。自适应学习系统是一种考虑学生学习成绩，强调个性化学习的系统。在自适应学习系统[12]中，概念图作为一种直观的知识可视化工具，可以根据学生的学习表现进行自适应调整。通过对概念图[13]、[14]的分析，可以挖掘出有价值的信息。</p>
+<p>自概念图提出以来，研究者们对概念图的生成和应用进行了大量的研究。Chen等人通过学术文章为电子学习生成了概念图。他们使用电子学习期刊文章和会议论文作为数据源，并使用文本挖掘技术自动生成概念图。Qasim等人提出了一种基于集群的方法，用于从文本文档生成概念图。他们使用了多种技术来处理文本文档，如自然语言处理、聚类、信息检索和结构相似性度量。生成的概念图可以辅助教学。Lee等人[17]提出了一种利用单词的爆发从单个文档自动生成概念图的方法，该方法得到了验证。Wang等人提出了一种从教科书中生成概念图的联合优化模型。该模型使用教科书中隐含的概念关键字之间的关系生成概念图。Lai等人[19]提出了一种基于信息检索技术的系统，该系统可以从书的各个部分提取关键词，生成关于这本书的关键词概念图。Santos[20]对基于自然语言处理和机器学习技术的概念进行了抽象分类，并分析了概念之间的关系，自动生成概念图。</p>
+<p>这些研究使用文本分析、自然语言处理、机器学习和其他技术来分析非结构化文本并自动生成概念图。生成的概念图可以为教师提供有用的参考，为教师设计教材，帮助学生理解概念的结构。这些研究从文本中提取关键项目并生成概念图。但是，生成的概念图并<strong>没有分析学生的学习行为，也没有反映学生对概念的掌握程度</strong>，难以因材施教。</p>
+<p>也有很多论文考虑学生的学习行为，生成和分析概念图。Lee等人提出了一种利用Apriori算法生成概念图并利用概念图诊断教学障碍的系统。该系统考虑了学生的学习成绩，对学生进行了统一的指导。Bai等人提出了一种基于模糊规则[22]和学生答题记录的概念图自动构建方法。利用模糊规则和模糊推理技术，自动构造概念图，并对概念之间的关联度进行评价。生成的概念图表明，应该先学习一个概念，然后再学习另一个概念。Chen等人提出了一种基于数据挖掘技术的自适应学习系统概念图的自动生成方法。该方法可以根据学生的答题记录动态生成概念图，具有一定的参考意义。Huang等人使用关联规则法对所有学生的考试记录进行分析，自动生成概念图。生成的概念图反映了所有学生的学习成绩。Schroeder等人研究了使用概念图学习的效果。他们将概念图应用于所有学生，并验证了概念图在学习上具有持续的优势。Romero等人提出了一种基于概念图的学习策略。该策略由学生创建概念图，并与教师创建的概念图进行比较，发现学生在概念掌握上的弱点。该策略注重学生的学习体验，具有主观性。这些研究取得了很大的成功，符合自适应学习系统的特点。对教学具有一定的指导意义。然而，这些研究也有局限性。生成的概念图反映了所有学生的学习成绩。所有学生都遵循相同的学习路径和学习时长。进一步分析概念图通常需要劳动力的帮助。它很费时，不利于从概念图中快速提取信息。</p>
+<p>总体上，对<strong>概念图的研究归纳为两种类型</strong>。第一类研究利用文本分析[26]技术自动生成概念图。然而，生成的概念图缺乏进一步的分析，不能反映学生的学习成绩，也不能反映自适应学习系统的特点。第二种研究考虑了学生的学习成绩。然而，生成的概念图反映了所有学生的特点，不能根据学生对概念的掌握程度来区分学生。该诊断也适用于所有学生，并没有能力区分学生。在劳动力的帮助下，概念图的分析是费时的。本研究<strong>采用聚类算法，根据学生对概念的掌握程度将学生进行分组，并结合关联规则挖掘方法生成多个概念图。每个概念图对应一组学生的学习特征，可以有效区分学生。利用拓扑排序算法，分别分析概念图，自动生成具有不同学生学习特征的学习路径</strong>。每个学习路径的学习顺序和学习时长不同，可以为教师提供教学建议，为学生提供学习指导</p>
+<h3 id="LPG生成算法"><a href="#LPG生成算法" class="headerlink" title="LPG生成算法"></a>LPG生成算法</h3><p>LPG (Learning Paths Generation)算法利用学生的考试记录，结合问题与概念之间的关系数据，将学生对问题的掌握转化为学生对概念的掌握，提取学生的学习特征。聚类方法是根据学生的学习特点将学生分成不同的群体，然后通过关联规则挖掘方法生成多个不同的概念图。在这些概念图的基础上，利用拓扑排序算法分析概念之间的关联，不同的概念图可以生成不同的学习路径。这些学习路径是根据每一组学生对每个概念的掌握程度来简化的。可以根据学生的学习情况生成不同的简化学习路径。学生可以根据这些简化的学习路径，有针对性地学习概念。LPG算法流程图如图1所示。此外，我们在本文中使用表1中的符号</p>
+<hr>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>现有的概念图研究对学生的学习成绩研究不足，研究结果是宏观的，不能反映自适应学习系统的特点。针对这些局限性，提出了一种基于概念图的自适应学习系统学习路径自动生成算法LPG。LPG算法利用聚类技术，根据学生对概念的掌握程度，自动将学生分成若干组，并结合关联规则挖掘方法生成多个概念图，利用拓扑排序算法生成学习路径。</p>
+<p>具有学习时间的简化学习路径可以为教育者提供学生的学习诊断报告和相应的学习内容推荐计划。对学生进行适应性评估，并给出相应的学习路径。随着小考数量的增加，可以不断地对学生进行诊断，并根据学生的考试记录自动更新学习路径。教育者可以根据最新的学习路径不断调整教学计划，学生可以进一步提高学习效率。本研究可为适应性学习系统的教学提供建议和规划。随着数据的不断收集，可以及时更新自适应学习系统，进一步提高适应性。</p>
+<p>实验表明，LPG算法具有以下特点:1)适应性好，学生群体间的差异性高。基于学生对概念的掌握，可以产生几种不同的学习路径。2)劳动力成本低。学习路径可以自动生成和简化。3)高灵活性。学习路径的数量可以根据实际需要设置。</p>
+<p>LPG算法虽然在自动生成学习路径方面表现良好，但也存在一定的局限性。受时间、空间等因素的限制，本文只验证了LPG算法能够区分学生，没有观察学生的长期学习表现，也没有验证LPG算法对提高学生成绩有帮助。此外，为了方便提取学生的学习特征，问题与概念之间的关系只能是一对一的，这降低了试卷的灵活性。从大时间跨度中收集数据，使LPG算法适用于多对多关系数据是我们未来的工作</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/论文阅读记录（2）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/28/论文阅读记录（2）/" itemprop="url">【论文】基于增强学习的ALS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-28T11:04:09+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T12:58:10+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/28/论文阅读记录（2）/" class="leancloud_visitors" data-flag-title="【论文】基于增强学习的ALS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>《A Reinforcement Learning-Based Adaptive Learning System》<br>Springer Nature 2018 埃及吉萨泽维尔市科技大学学习技术中心</p>
+</blockquote>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>影响学生学习行为和学习结果的个人和社会<strong>因素</strong>差异巨大，教育系统需要适应每个学生这些不同的因素。在这篇论文中，我们提出了一种在不同的学习环境中，包括个人学习和合作学习中，以不同的方式适应最具影响力的因素的方法。该方法<strong>利用强化学习来构建智能环境，不仅提供了一种推荐合适学习材料的方法，而且提供了一种考虑学生不断变化的状态和对技术的接受程度的方法</strong>。我们通过仿真来评估我们的系统。实验结果表明了该方法的可行性。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>个性化学习通常是指为学生提供个性化的指导和支持，通常包括将技术集成到一个混合学习场景[1]中。这个概念被看作是一种新的学习方法，在这种学习方法中，“一刀切”的策略不再适用或不能接受[2]。个性化学习包括几种策略。通常，学生朝着一个明确的目标前进的过程会被持续监控和评估。此外，为学生提供个性化的学习路径，他们有经常更新的个人资料，包括缺点、优点、动机和目标。  </p>
+<p>为了提供上述策略，我们需要建立一个智能的学习环境，不断监控影响学习的变量在不同的设置，因此，更新建议的学习路径和材料从一个学习者到另一个。这是一项非常重要的任务，因为影响学习的因素不能单独建模或测量[3-7]。此外，它们还受到其他可能隐藏或不清楚的因素的影响。例如，学习体验受学习者情感状态的影响，这可能不容易测量或监测。  </p>
+<p>这些文献包括一些研究，为个性化学习提供了有前景的方法。以[8]为例，提出了基于本体的学生模型、学习对象模型和教学方法。该模型由四层组成，通过推理和基于规则的操作支持个性化学习。同样在[9]中，个性化的学习过程是通过调整学习对象与学习者学习风格的兼容性级别来支持的。此外，利用改进形式的遗传算法对学习对象相对于学习者的知识水平和学习过程中的交互性水平的复杂度进行了改进。结果表明，学生的满意度有所提高。此外，在[10]中，使用案例库规划技术生成适合学生个人资料的电子学习路线序列。此外，在[11]，一个调查的学生建模方法为建立一个自动辅导系统。研究发现，在不同的建模工具和方法中，最常见的建模学生特征是知识水平，最不常见的建模学生特征是元认知特征。然而，检测哪一组特征更重要仍然是一个悬而未决的问题。  </p>
+<p>本研究开发了一个个性化学习系统的框架，减轻了构建有效的个性化学习系统的一些缺点和挑战。该框架基于无监督机器学习工具;强化学习(RL)。由于个性化学习系统必须是<strong>高度动态</strong>的，因此RL将是对此类系统特性建模的有效工具。这主要是因为RL具有动态逼近环境变化模型的潜力。建议的方法包括以下步骤。<strong>首先，确定学习者的状态。其次，通过一系列的行动建议学习材料或学习路径。第三，基于强化学习，更新学习者状态，更新推荐学习路径或学习材料所获得的奖励。  </strong></p>
+<h3 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h3><blockquote>
+<p>介绍强化学习和主要的几种方法：时域差分TD法、Q-learning</p>
+</blockquote>
+<p>强化学习的灵感来自于学习如何通过与环境的互动自然地发生，以及生物系统如何学习[12]。与所有类型的学习类似，它是关于将情景映射到行动，以最大化一些奖励。然而，这类学习的挑战在于，与其他机器学习范式不同，学习者必须自己发现在特定情况下应该采取的最佳行动。因此，学习代理必须能够感知环境并选择能够最大化奖励功能的行为，并相应地更新其状态。此外，尽管她所处的环境存在不确定性，但她仍不得不采取行动。<br><img src="/img/reinforcement/1.png" alt=""><br>强化学习方案通过探索构建环境信息，适用于无监督的在线实现。一般的RL如图1所示。环境的特征可以由其一定数量的特征的配置或值来表征，称为其状态，在t时刻记为S(t)。每个状态都有一个值，依赖于特定的即时回报或成本，在t时刻记为R(t)，在输入时生成。在每个实例中，代理可能采取一系列可能的操作中的一个，a (t)，这将影响系统的下一个状态，S(t + 1)，因此根据一定的转换概率，将经历下一个奖励/成本。考虑到系统的当前状态，代理对操作的选择会根据经验进行修改。因此，RL系统使用过去在某个系统状态下所采取的行动经验和经验奖励来更新其对未来行动的决策。当代理与环境交互时，代理会随着时间的推移开发特定系统状态下要采取的操作策略。    </p>
+<p>强化学习问题通常采用动态规划、蒙特卡罗方法或时域差分法(TD)求解，TD是蒙特卡罗方法和动态规划[13]的结合。在TD学习中，没有使用模型来模拟环境，但是学习的奖励是更新的。其主要目标是估计给定策略p的值函数Vp，即预测问题。与蒙特卡罗方法类似，TD使用经验来更新该经验中发生状态的v估计值。然而，在蒙特卡罗方法中，更新是在访问后返回已知时完成的。在TD情况并非如此,等待下一个时间步的方法tþ1更新观察奖励Rtþ1和估计V SðÞtþ1。最简单的TD方法由(1)给出</p>
+<p>另一种常用的解决RL问题的方法是Q-learning[14]。该算法允许根据系统与环境的交互历史来学习最优策略。与TD相比，这个算法是一个off-policy算法，因为没有使用策略来建议操作。  </p>
+<p>这些行动是根据其他一些标准提出的。如果系统处于Si状态;人工智能,需要行动,它将获得奖励的riþ1。每次系统采取一个动作，给定一个状态，并收到一个奖励，对状态S在动作a下得到的分数进行估计，记为Q(S, a)，根据(2)进行更新:</p>
+<p>其中a为阶跃速率;r为观察到的奖励，s ‘为新状态，c &lt; 1为所采取行动下未来奖励的折现因子。QðÞs0;a0是系统通过在s0状态下采取一些未来的行动来衡量的最大奖励的估计。完整的算法如下。 </p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><h4 id="主要组件"><a href="#主要组件" class="headerlink" title="主要组件"></a>主要组件</h4><p>该框架由六个主要组件组成，如图2所示。这六个组件连接到用户界面和学生数据库。<br><img src="/img/reinforcement/2.png" alt=""></p>
+<ol>
+<li>系统首先加载学生的静态信息，以及状态-动作矩阵历史。这包括一些静态数据(如性别、专业、课程等)，以及一些动态数据(如状态-行为-奖励历史、交互级别、日志活动等)。</li>
+</ol>
+<ul>
+<li>Student state在步骤2中加载。最初，这表示她最后一次登录到系统时的状态。如果这是她第一次，那么匹配她的静态数据的状态是。</li>
+<li>在第三步，建议一个行动，通常包括一个推荐的学习材料或一些引人入胜的材料，如她的导师在书面或录制的视频或音频中的一些建议，一句引言，甚至一个笑话。</li>
+<li>在第四步中，衡量所采取行动的回报。这包括一个直接的奖励，学生被要求为她对推荐材料的满意程度提供一个值。此外，测量她与系统的交互水平，并结合她的满意度水平来更新奖励。这两个操作都被分配了一个5分的值，这些值用于更新建议的操作所获得的奖励，下次学生使用系统时将使用这些操作。<br>此外，还使用了一种间接的测量方法，包括考试成绩和她收到的作业。如果期末成绩(以分数计)下降，则在整个学期的建议行动顺序中增加一个负面奖励。例如，如果学生之前的成绩是2.5，如果新成绩是2，那么这将对应于-0.5，作为一系列建议的行动所获得的最终奖励。如果这个列表包含5个建议的操作，那么每个操作都将被赋一个负值0.1，即平均值。因此，该系统的主要目标是学习针对每个学生的状态所采取的一系列行动，这些行动将使她在整个学期中对系统的满意度和交互性最大化，同时提高她的学习成果。</li>
+<li>在第五步中，确定学生的新状态。这是通过让学生在可用的状态列表中进行选择来实现的。她还被问及，如果她认为所提供的状态中没有一个能够描述她目前的状态，那么是否建议向系统中添加一个新状态。此步骤是为了提高系统的性能，专家将分析新建议的状态，并将新添加状态的建议操作列表添加到系统中。这个过程是离线完成的，每隔一段时间(例如，学期结束时)。</li>
+</ul>
+<p>使用RL的个性化学习系统面临的主要挑战是如何确定状态-行为-奖励三元组。在下面的小节中，将更详细地描述提议的基于rl的框架的三个主要部分。</p>
+<h4 id="状态-行为-奖励"><a href="#状态-行为-奖励" class="headerlink" title="状态-行为-奖励"></a>状态-行为-奖励</h4><p>构建个性化学习系统的一个重要的初始阶段是选择合适的因素，并加以考虑和表示。通过测量这些因素，可以有效地实现个性化。为了确定在设计有效的个性化学习系统时应包括哪些因素，我们对研究进行了仔细和全面的调查，强调了在不同环境下影响学习的因素。根据这项调查，需要测量的因素可以分为以下几类。</p>
+<ul>
+<li>个人因素</li>
+<li>社会因素</li>
+<li>认知因素</li>
+<li>结构因素</li>
+<li>环境因素  </li>
+</ul>
+<p>上述因素中，有一些是个体层面的因素，也有一些是群体层面的因素，当学习环境是合作性的时候，需要考虑这些因素。要考虑的因素的另一种可能的分类是静态因素和动态因素。例如，学生的静态特征包括电子邮件、年龄、母语。同时，每次学生与系统交互时，动态特性都被定义和更新。有些因素(静态因素)是学生在学习之初就设定好的，而动态因素通常是通过问卷来测量的。因此，挑战在于<strong>定义动态学生的特征</strong>，这些特征构成了系统适应每个学生需求的基础。在该方法中，状态表示为向量X = (x1, x2，…，xn)，其中n为每个状态的维数。表1显示了每个状态的<strong>维数</strong>，并描述了<strong>如何计算</strong>这些状态。此外，该表还列出了针对每种可能状态的建议<strong>初始操作</strong>列表。因此，当调用该工具时，将根据为每个维度测量的值填充附加到每个学习者的向量。有大量的状态-操作对，这使得探索可能的操作空间非常昂贵。此外，由于缺少空间，表1中只显示了可能的状态-操作对的子集。每一个成功的行动建议所获得的奖励由两个因素来衡量;首先是用户的接受程度，其次是长期的奖励，这代表GPA的提高。</p>
+<h3 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h3><p>通过仿真验证了该框架的性能。在仿真实验中，采用了一个具有20个状态和20个动作的系统。因此，状态-动作矩阵的维数为20。此外，矩阵初始填充随机生成的q值(奖励)，q值服从正态分布(均值= 0，标准差= 1)，并使用e-贪心方法选择要选择的动作，e设置为0.1。在e-贪心策略中，选择具有最大奖励的操作的概率为e。这允许探索环境，而不必选择具有最大奖励的操作。分配给每个状态的20个可用动作的奖励是随机产生的。然而，对于10个可用的行动，分配的奖励是消极的，而其他10个行动分配的奖励是积极的。将学习率和其他模型参数设置为0.1。并对10名学生的行为进行了模拟。最多使用100次迭代。图3显示了每个模拟的学生行为(在图例中由S1到S10表示)获得正面奖励的操作数量与迭代总数的关系。如图所示，随着迭代次数的增加，获得正面奖励的建议操作的数量也在增加。这表明，经过足够多的运行之后，模拟系统能够为每个学生状态对找到要遵循的最佳操作。<br><img src="/img/reinforcement/3.png" alt=""></p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>提出了一种基于RL的个性化学习框架。提出的方法可以帮助学生找到她或他真正需要什么，通过调查一个学习材料的特点或一个没有被探索过的序列。它还允许学生和/或教师添加新建议的学习序列。通过调查每个学生的状态-行为-奖励的历史，系统将智能地为每个学生提出最佳的学习环境。作为未来的工作，重要的是为每个状态以便为每个学生对探索最佳行动。然而，主要的问题是大量可能的状态或状态操作值。这可能会导致复杂性和收敛性问题，特别是如果模型是在线实现的，而没有重复训练的好处。因此，在未来的工作中需要考虑可伸缩性问题</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/论文阅读记录（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/22/论文阅读记录（1）/" itemprop="url">【学位论文】自适应学习系统支持模型与实现机制研究 </a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T18:11:03+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T13:00:40+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/22/论文阅读记录（1）/" class="leancloud_visitors" data-flag-title="【学位论文】自适应学习系统支持模型与实现机制研究 ">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>自适应学习系统支持模型与实现机制研究<br>东北师范大学 教育技术学 姜强 2012年 博士论文</p>
+</blockquote>
+<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>对比常见学习系统千篇一律的学习活动顺序和人人网<strong>系统主动注入</strong>的的资源获取策略，提出<strong>系统主动注入和用户主动查找</strong>的双主策略，解决<strong>学习迷航</strong>和<strong>知识过载</strong>问题  </p>
+<h3 id="国内外研究"><a href="#国内外研究" class="headerlink" title="国内外研究"></a>国内外研究</h3><h4 id="国外"><a href="#国外" class="headerlink" title="国外"></a>国外</h4><p>介绍11个自适应学习系统</p>
+<h4 id="国内"><a href="#国内" class="headerlink" title="国内"></a>国内</h4><ul>
+<li>北京师范 余胜泉<br>适应性学习模式的三个关键环节：<ul>
+<li>学习诊断（重要）</li>
+<li>学习内容的动态组织</li>
+<li>学习策略（传授、探索、协作）</li>
+</ul>
+</li>
+<li>华南师范 陈品德<br>A-Tutor<ul>
+<li>适应性内容呈现</li>
+<li>适应性导航支持</li>
+</ul>
+</li>
+<li>南京师范 柏宏权<br>I-Tutor<br>机器学习了解个性化特征，包括水平和偏好</li>
+<li>浙江大学 张剑平<br>学生陈仕品、张家华  </li>
+</ul>
+<h5 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h5><ol>
+<li>学生模型的维度</li>
+<li>学习风格判断不准确</li>
+<li>单一的个性化推荐技术</li>
+<li>资源建设不统一</li>
+<li>理论探讨更多</li>
+</ol>
+<h3 id="自适应学习系统参考模型"><a href="#自适应学习系统参考模型" class="headerlink" title="自适应学习系统参考模型"></a>自适应学习系统参考模型</h3><p>五部分组成</p>
+<ul>
+<li>用户模型&amp;学习行为</li>
+<li>领域模型</li>
+<li>自适应模型<ul>
+<li>定义教学设计的规则</li>
+</ul>
+</li>
+<li>自适应引擎</li>
+<li>呈现模型</li>
+</ul>
+<h3 id="学生模型"><a href="#学生模型" class="headerlink" title="学生模型"></a>学生模型</h3><p>解释结构模型法</p>
+<h5 id="学习风格"><a href="#学习风格" class="headerlink" title="学习风格"></a>学习风格</h5><p>学习风格的构建分两个步骤  </p>
+<ul>
+<li>显性方法——Felder Sliverrman学习风格模型初始化  </li>
+<li>隐形方法——规则和贝叶斯挖掘学习行为进行修正<ul>
+<li>贝叶斯结构图<br><img src="/img/paperread1/bn.png" alt=""></li>
+<li>条件概率表<br><img src="/img/paperread1/pt.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h6 id="Felder-Sliverman"><a href="#Felder-Sliverman" class="headerlink" title="Felder Sliverman"></a>Felder Sliverman</h6><ul>
+<li>活跃/沉思：论坛活跃程度</li>
+<li>感悟/直觉：具体内容、抽象内容 浏览时间</li>
+<li>视觉/言语：文本、视频、图像浏览时间</li>
+<li>序列/综合：浏览知识树、点击上一页下一页</li>
+</ul>
+<h5 id="知识水平"><a href="#知识水平" class="headerlink" title="知识水平"></a>知识水平</h5><p>概念累计计分法<br>布卢姆认知理论构建<br><img src="/img/paperread1/recog.png" alt=""><br>按知识点的不同理解等级，给出不同的要求定义，出三道题来判断是否达到要求</p>
+<h4 id="知识模型"><a href="#知识模型" class="headerlink" title="知识模型"></a>知识模型</h4><p>章、节、知识点、学习对象、用户、媒体类型、知识点抽象程度……</p>
+<h5 id="protege-owl"><a href="#protege-owl" class="headerlink" title="protege/owl"></a>protege/owl</h5><h3 id="自适应实现机制"><a href="#自适应实现机制" class="headerlink" title="自适应实现机制"></a>自适应实现机制</h3><p>判断用户的学习风格，根据日志进行修正，</p>
+<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><p>前测、学习、后测</p>
+<ul>
+<li>定量<ul>
+<li><strong>问卷</strong>、日志、对照试验（实证）</li>
+</ul>
+</li>
+<li>定性<ul>
+<li><strong>访谈</strong>、讨论、自评</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JIN Zoe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoolZoe's">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/22/test/" itemprop="url">【综述】学生模型文献综述</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T17:05:33+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T13:01:31+08:00">
+                2019-07-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/22/test/" class="leancloud_visitors" data-flag-title="【综述】学生模型文献综述">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>学生模型是自适应学习系统中的核心部分。国内研究学生模型主要重点关注在学生作为学习者本身的特点进行研究，如学习风格、学习偏好等，即依据学习者的哪些个性特征进行建模，理论性较强，研究者大部分属于教育领域。但自适应学习系统中更关注的是学生学习的情况，对知识的掌握程度，这也是决定我们系统能够进行“自适应”的基础。</p>
+<h3 id="个性特征"><a href="#个性特征" class="headerlink" title="个性特征"></a>个性特征</h3><p>一种简单的归纳[6]是将学生的个性特征分为：用户知识、兴趣、目标和任务、背景、个人特质。个人特质包括认知风格和学习风格。对认知能力和个性简单地一笔带过。</p>
+<p>Vandewaetere等人[7]对自适应学习系统中学生模型进行了系统性的文献综述。通过对自适应学习环境中学习者模型的属性变量进行全面搜索后，将42篇文献中所收集到的学习者个性特征分成三类：一是认知类。认知类包括工作记忆容量、先验知识、认知风格、学习风格、学习目标或目标定向。二是情感类。情感类由学习者的情感特征构成，如沮丧、困惑、喜悦、挫折、情绪、自我效能等。三是学习行为类。学习行为类包括需要帮助、获取反馈、对每个任务的尝试次数、取得的成绩和完成的练习等。</p>
+<p>还有一种学习者模型的个性特征分为领域相关和领域无关两类信息[8]。领域相关的信息，包括知识水平、技能水平、先验知识、学习活动记录、评估记录、测试记录等信息。领域无关信息包括目标、认知能力、动机状态、背景与经验、偏好等信息。</p>
+<p>另一种分类依据个性化特征是否随着时间而变化的特点，将学生模型的特征分为静态和动态个性化特征两种[9]。静态个性化特征包括姓名、性别、电子邮件、年龄、母语、学习风格、学习偏好等。动态个性化特征包括学习兴趣、认知能力、知识掌握水平、知识技能、知识掌握状态、错误和迷失概念、学习行为方式、情感因素、元认知等个性化特征。</p>
+<p>在自适应学习系统的发展过程中，学习风格理论的形成有着重要的意义。学习风格被认为是影响学习者取得成就的重要因素之一，该理论很好的解释了不同学习者在学习过程中取得不同的学习效果[10]。调查发现，由于基于Felder-Sliverman的学习风格[11]其对学习者合理的分类方式，已成为自适应学习系统的首选和主流。</p>
+<h3 id="知识水平"><a href="#知识水平" class="headerlink" title="知识水平"></a>知识水平</h3><p>认知诊断模型是心理学相关的概念，挖掘被试作答过程和测验分数背后的知识结构、加工技能和认知过程，做出更加准确详尽的诊断和评估。目前大部分系统中使用到的模型都基于项目反应理论（Item Response Theory）[12]，IRT是属于认知诊断常用的一种理论，即根据被测试者针对某个问题的答案来对被测者的认知状况进行估计。“项目”实质就是测试题，“反应”就是被测者的答案。</p>
+<p>另一种常见的认知诊断模型是DINA（Deterministic Inputs, Noisy “and” Gate Model）[13]，适用于对二元计分项目测验，依赖于Q矩阵的构建。计算机自适应测验就是基于诊断模型，在题库建设、选题策略等方面形成了一套理论和方法。PFA（Performance Factors Analysis）[14]和LFA（Learning Factors Analysis）[15]，这两个本质上还是IRT模型与Q矩阵的结合。</p>
+<p>基于概率的贝叶斯知识追踪（Bayesian Knowledge Tracing）[16]模型不同于认知诊断，它是最简单的隐马尔科夫链模型，其中学习状态是潜变量，测验结果是观察变量，同时又纳入了猜测参数和下滑参数，相比PFA和LFA，该模型较为简单，很容易进行参数估计，但是准确率较低，一般需要纳入额外的参数提高预测率[17]。在此基础上已经发展出各种各样的变体，改进的BKT模型效果并不亚于下面即将介绍的深度知识追踪（Deep Knowledge Tracing）[18]。</p>
+<p>知识追踪领域的最新进展就是2015年Chris Piech提出的结合了深度学习的DKT模型，它用循环神经网络进行学习状态的时间序列建模，优点是不用标记试题，常用的循环神经网络模型除了基础的RNN，还有LSTM。但是DKT无法详细的输出学生对于每个知识点的掌握情况。</p>
+<p>2017年提出另一种动态键值记忆网络（DKVMN）[19]的新模型，基于记忆增强神经网络，结合BKT和DKT的优点，分别构建key和value对应的两个矩阵，一个静态的用于存储知识点，另一个动态的用于存储学生的知识状态，能够自动的关联知识并且输出学生的掌握水平。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/09/研究知识追踪-学生建模的学校和人物总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -600,14 +2238,32 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
@@ -643,7 +2299,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
